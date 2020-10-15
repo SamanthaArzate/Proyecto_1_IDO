@@ -14,7 +14,7 @@ clear;
 close all;
 
 %% Definicion del problema
-archivoTxt = "att48.txt"; 
+archivoTxt = "zi929.txt"; 
 
 model = CreateModel(archivoTxt);      % Crea el modelo del TSP deseado
 
@@ -123,9 +123,9 @@ for it = 1:MaxIt
     disp(['Iteracion ' num2str(it) ': Mejor Costo = ' num2str(BestCost(it))]);
     
     % Genera la grafica de la mejor solucion hasta el momento
-    figure(1);
-    PlotSolution(BestSol, model); 
-    pause(0.01);
+    %figure(1);
+    %PlotSolution(BestSol, model); 
+    %pause(0.01);
     
     % Revisa si se llegó al minimo global trivial (cero)
     if BestCost(it) == 0
@@ -135,15 +135,15 @@ for it = 1:MaxIt
 end
 toc
 
-BestCost = BestCost(1:it); % es hasta "it" por si sale con costo cero 
+%BestCost = BestCost(1:it); % es hasta "it" por si sale con costo cero 
 
 
 %% Results
 
-figure;
-plot(BestCost,'LineWidth',2);
-xlabel('Iteracion');
-ylabel('Mejor Costo');
-grid on;
+%figure;
+%plot(BestCost,'LineWidth',2);
+%xlabel('Iteracion');
+%ylabel('Mejor Costo');
+%grid on;
 
 

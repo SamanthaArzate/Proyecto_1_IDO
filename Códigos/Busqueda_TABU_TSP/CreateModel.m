@@ -11,7 +11,7 @@
 
 function model = CreateModel(archivoTxt) % 'ejemplo.txt'
     
-    A = rmmissing(readmatrix(archivoTxt)) %leemos las bases de datos y omitimos NaN
+    A = rmmissing(readmatrix(archivoTxt)); %leemos las bases de datos y omitimos NaN
 
     x = A(:,2); % las entradas de x estan en la segunda columna
     
@@ -19,7 +19,7 @@ function model = CreateModel(archivoTxt) % 'ejemplo.txt'
     
     n = numel(x); % cuenta el numero de ciudades
     
-    d=zeros(n,n); % inicializamos la matriz de distancias
+    d = zeros(n,n); % inicializamos la matriz de distancias
     
     for i = 1:n-1
         for j = i+1:n
