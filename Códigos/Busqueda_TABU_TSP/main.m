@@ -57,8 +57,21 @@ empty_individual.Cost = [];
 sol = empty_individual;        % inicializa con la estructura vacia por si 
                                % la vecindad es vacía
                                
-sol.Position = randperm(model.n);       % genera un tour inicial, aleatorio
+% sol.Position = randperm(model.n);       % genera un tour inicial, aleatorio
                                         % y exhaustivo
+
+
+%Solución inicial NN
+[row,col] = find( model.d == min(model.d(model.d>0)));
+sol.Position(1) = row(1);
+sol.Position(2) = col(1);
+
+for i = 3:model.n
+    destinos = find(~ismember(1:model.n,sol.Position(1:i-1)));
+    [row,col] = find( model.d == min(model.d(sol.Position(i-1),destinos)));
+    r = find(row == sol.Position(i-1));
+    sol.Position(i) = col(r(1));
+end                                        
                                         
 sol.Cost = CostFunction(sol.Position);  % calcula costo de ese tour inicial
 
@@ -77,7 +90,7 @@ TC = zeros(nAction,1);
 
 %% Busqueda tabu (Ciclo principal)
 tic
-for it = 1:MaxIt 
+for it = 151:200%MaxIt 
     
     bestnewsol.Cost = inf;  % inicializa mejor costo de ruta en infinito 
                             % (cualquier cambio lo mejora)
@@ -112,8 +125,14 @@ for it = 1:MaxIt
     end
     
     % Verifica si la sol. de esta vecindad supera a la mejor encontrada
+    % si el progreso es > 1% actualiza la posicion, si no, random
     if sol.Cost <= BestSol.Cost
-        BestSol = sol;
+%         if (BestSol.Cost - sol.Cost)/BestSol.Cost > 0.01
+            BestSol = sol;
+%         else
+%             BestSol.Cost = sol.Cost;
+%             BestSol.Position = randperm(model.n);
+%         end
     end
     
     % Guarda el mejor costo hasta ahora (iteracion it) en vector BestCost
